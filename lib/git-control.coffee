@@ -18,6 +18,9 @@ module.exports = GitControl =
     atom.commands.add 'atom-workspace', CMD_TOGGLE, => @toggleView()
     atom.workspace.onDidChangeActivePaneItem (item) => @updateViews()
     atom.project.onDidChangePaths => @updatePaths()
+
+    if atom.config.get("git-control.openOnStartup")
+        @toggleView()
     return
 
   deactivate: ->
@@ -67,5 +70,10 @@ module.exports = GitControl =
     noFastForward:
       title: 'Disable Fast Forward'
       description: 'Disable Fast Forward for default at Git Merge'
+      type: 'boolean'
+      default: false
+    openOnStartup:
+      title: 'Open On Startup'
+      description: 'Opens git-control each time Atom starts up'
       type: 'boolean'
       default: false

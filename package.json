@@ -10,9 +10,6 @@
     "bitbucket",
     "git"
   ],
-  "activationCommands": {
-    "atom-workspace": "git-control:toggle"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/jacogr/atom-git-control.git"

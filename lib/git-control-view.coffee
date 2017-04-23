@@ -61,6 +61,9 @@ class GitControlView extends View
         @subview 'logView', new LogView()
 
   serialize: ->
+    return {
+        deserializer: 'git-control/GitControlView'
+    }
 
   initialize: ->
     console.log 'GitControlView: initialize'
@@ -278,3 +281,6 @@ class GitControlView extends View
   tag: (name, href, msg) =>
     git.tag(name, href, msg).then => @update()
     return
+
+  getURI: () =>
+    return 'atom://git-control'

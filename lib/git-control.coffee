@@ -18,6 +18,11 @@ module.exports = GitControl =
     atom.commands.add 'atom-workspace', CMD_TOGGLE, => @toggleView()
     atom.workspace.onDidChangeActivePaneItem (item) => @updateViews()
     atom.project.onDidChangePaths => @updatePaths()
+
+    atom.workspace.addOpener (uri) ->
+      if uri == 'atom://git-control'
+        return GitControl.getView()
+      return
     return
 
   deactivate: ->
@@ -26,20 +31,15 @@ module.exports = GitControl =
 
   toggleView: ->
     console.log 'GitControl: toggle'
+    atom.workspace.open('atom://git-control', undefined, 0, 0, undefined, true, true, false, true);
 
-    unless view and view.active
-      view = new GitControlView()
-      views.push view
+  getView: ->
+    if !view
+      view = new GitControlView();
+    return view
 
-      pane = atom.workspace.getActivePane()
-      item = pane.addItem view, {index: 0}
-
-      pane.activateItem item
-
-    else
-      pane.destroyItem item
-
-    return
+  deserializeGitControlView: ->
+    return new GitControlView();
 
   updatePaths: ->
      git.setProjectIndex(0)

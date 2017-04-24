@@ -9,7 +9,7 @@ class CommitDialog extends Dialog
         @strong 'Commit'
       @div class: 'body', =>
         @label 'Commit Message'
-        @textarea class: 'native-key-bindings', outlet: 'msg', keyUp: 'colorLength'
+        @textarea class: 'native-key-bindings', outlet: 'msg', keyUp: 'colorLength', keyPress: 'submitOnCtrlEnter'
       @div class: 'buttons', =>
         @button class: 'active', click: 'commit', =>
           @i class: 'icon commit'
@@ -23,6 +23,10 @@ class CommitDialog extends Dialog
     @msg.val('')
     @msg.focus()
     return
+
+  submitOnCtrlEnter: (event) ->
+    if event.keyCode == 13 && event.shiftKey
+      @commit()
 
   colorLength: ->
     too_long = false
